@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+
+
+{% block content %}
+    <div class="header_top"><h1>{{ title }}</h1></div>
+    <div class="content">
+        <div class="register">
+            <form class="form-control" method="post" name="register">
+                <div class="register-top-grid">
+                    <h3>填写个人信息</h3>
+                    <div>
+                        <label>用户名：*</label>
+                        {{ form.username }}
+{#                        <input type="text" placeholder="请输入你的用户名" class="form-control" id="username">#}
+                        <span class="regTip" id="userinfo"></span>
+                    </div>
+                    {#					 <div>#}
+                    {#						<span>Last Name<label>*</label></span>#}
+                    {#						<input type="text"> #}
+                    {#					 </div>#}
+                    <div>
+                        <label>邮箱地址：*</label>
+                        {{ form.email }}
+{#                        <input type="text" placeholder="请输入正确的邮箱地址" class="form-control" id="email">#}
+                        <span class="regTip" id="useremail"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <h1 class="news-letter" href="#">
+                        {#						 <label class="checkbox"><input type="checkbox" name="checkbox" checked=""><i> </i>Sign Up for Newsletter</label>#}
+                        hello!
+                    </h1>
+                </div>
+                <div class="register-bottom-grid">
+                    <h3>登录信息</h3>
+                    <div>
+                        <label>密码：*</label>
+                        {{ form.password }}
+{#                        <input type="password" class="form-control" id="password">#}
+                        <span class="regTip" id="passwordinfo"></span>
+                    </div>
+                    {#							 <div>#}
+                    {#								<span>再次确认：<label>*</label></span>#}
+                    {#								<input type="text">#}
+                    {#							 </div>#}
+                    <div class="clearfix"></div>
+                </div>
+                <div class="register-but">
+
+                    {{ form.submit }}
+{#                    <input type="submit" value="提交">#}
+                    <div class="clearfix"></div>
+
+                </div>
+            </form>
+            <div class="clearfix"></div>
+
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $("#username").focus(function () {
+            $("#userinfo").html("设置后不可更改，长度为3-10，不要有中文");
+        });
+        $("#username").blur(function () {
+            ret = /^[\w\d_]{3,10}$/i;
+            user_span = $("#userinfo");
+            if (this.value.length == 0) {
+                user_span.html("");
+            } else if (this.value.length < 3 || this.value.length > 10) {
+                user_span.html("用户名长度不符合规范");
+            } else if (ret.test(this.value)) {
+                url = "http:127.0.0.1:5000/check_form?username=";
+                $.get(url + this.value, function (data) {
+                    console.log(data);
+                    if (data == "可以注册200") {
+                        user_span.html("用户名合法");
+                    } else {
+                        user_span.html("用户名太受欢迎了");
+                    }
+                })
+            } else {
+                user_span.html("用户名命名不合法");
+            }
+        });
+        $("#email").focus(function () {
+            $("#useremail").html("请正确填写邮箱格式：...@....com");
+        });
+        $("#password").focus(function () {
+            $("#passwordinfo").html("账号为6~18位的字母及数字组合");
+        });
+        $("#password").blur(function () {
+            ret1 = /^[\w\d_]{6,18}$/i;
+            user_span = $("#passwordinfo");
+            if (this.value.length == 0) {
+                user_span.html("");
+            } else if (this.value.length < 6 || this.value.length > 18) {
+                user_span.html("密码长度不符合规范");
+            }
+        });
+    </script>
+{% endblock content %}
+
+
+
+
+
