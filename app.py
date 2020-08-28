@@ -20,9 +20,10 @@ def create_app(config=None):
             app.config.from_pyfile(config)
 
     # 将序列、数据库、路由挂载到app
-    import serializer, models, router
+    import serializer, models, router, mail
     serializer.init_app(app)
     models.init_app(app)
     router.init_app(app)
+    mail.init_app(app)
 
     return app

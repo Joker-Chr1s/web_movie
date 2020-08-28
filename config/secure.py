@@ -25,3 +25,10 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 SECRET_KEY = "this is a secret_key"
 EXPIRES_IN = 3600
 
+#### 邮箱配置信息
+MAIL_SERVER = 'smtp.qq.com'
+MAIL_PORT = 465
+MAIL_USE_SSL = True
+MAIL_USE_TLS = False
+MAIL_USERNAME = '2069901568@qq.com'
+MAIL_PASSWORD = 'cysluefwwdancdgc'

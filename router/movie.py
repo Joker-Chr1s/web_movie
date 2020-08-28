@@ -19,11 +19,11 @@ def movie():
     # page
     # 当前页数
     # per_page
-    # 每页显示的条�?
+    # 每页显示的条�?
     # error_out
     # 是否打印错误信息
     page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 10))  # 这里�?0 决定每页显示的数目，可自行调�?
+    per_page = int(request.args.get('per_page', 10))  # 这里�?0 决定每页显示的数目，可自行调�?
     paginate = Movieinfo.query.order_by(Movieinfo.movieid).paginate(page, per_page, error_out=False)
     movies = paginate.items   #  拿到分页后的数据
 
@@ -34,7 +34,7 @@ def movie():
     }
     return render_template('movie.html', **context, title="movie")
 
-# 发表影评�?
+# 发表影评�?
 @movie_bp.route('/add_comment', methods=['POST', 'GET'])
 def add_comment():
     if request.method == 'POST':
@@ -59,7 +59,7 @@ def like():
     tag = request.args.get('tag', None)
     movie_id = request.args.get('aid', None)
     movie1 = Movieinfo.query.get(movie_id)
-    # 设置一个用户对同一部电影只能点赞一�?
+    # 设置一个用户对同一部电影只能点赞一�?
     if tag == '1':
         movie1.like -= 1
     else:
@@ -76,7 +76,7 @@ def search():
 
     # 查询
     page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 10))# 这里�?0 决定每页显示的数目，可自行调�?
+    per_page = int(request.args.get('per_page', 10))# 这里�?0 决定每页显示的数目，可自行调�?
     paginate = Movieinfo.query.filter(or_(Movieinfo.name.contains(keyword), Movieinfo.info.contains(keyword), Movieinfo.person.contains(keyword))).paginate(page, per_page, error_out=False)
     movies = paginate.items
     context = {
@@ -90,9 +90,9 @@ def search():
 @movie_bp.route('/type')
 def movie_type():
 
-    my_type = request.args.get('word', '')  #  获得url中的电影类型的参数�?
+    my_type = request.args.get('word', '')  #  获得url中的电影类型的参数�?
     page = int(request.args.get('page', 1))
-    per_page = int(request.args.get('per_page', 250))  # 这里�?0 决定每页显示的数目，可自行调�?
+    per_page = int(request.args.get('per_page', 250))  # 这里�?0 决定每页显示的数目，可自行调�?
     paginate = Movieinfo.query.filter(Movieinfo.info.contains(my_type)).paginate(page, per_page, error_out=False)
     movies = paginate.items
     context = {
@@ -107,3 +107,7 @@ def movie_type():
 def scan():
     scan_id = request.args.get('scan')
     return render_template('scan.html', scan_movie=scan_id)
+
+@movie_bp.route('/video')
+def video():
+    return render_template('video.html', title="视频")

@@ -100,6 +100,15 @@ def register():
 
     return render_template('register.html', title='注册',form=form, user=Userinfo.query.get(session.get('uid')))
 
+# @view01_bp.route('/check_form')
+# def check_form():
+#     username = request.args.get('itusername')
+#     if username:
+#         return "可以注册200"
+#     else:
+#         return "用户名已经被注册"
+
+
 @view01_bp.route('/center',methods=['GET','POST'])
 def center():
     if request.method == 'POST':
@@ -159,7 +168,15 @@ def single():
 
     return render_template('single.html', **context)
 
-
+# 发邮件
+from mail.sendmail import send
+import random
+@view01_bp.route('/sendmail/')
+def sendmail():
+    uemail = request.args.get('uemail')
+    thecode = random.randint(100000,1000000)
+    send([uemail], "KUN影网", "验证码{}".format(thecode))
+    return "发功成功"
 
 
 
